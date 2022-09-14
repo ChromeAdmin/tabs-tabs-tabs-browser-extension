@@ -1,0 +1,42 @@
+{
+  "name": "Tabs Tabs Tabs",
+  "description": "Puts tabs in idle so you can have all the tabs open",
+  "version": "0.1.1",
+  "manifest_version": 2,
+  "homepage_url": "https://github.com/ChromeAdmin/tabs-tabs-tabs-browser-extension",
+  "icons": {
+    "16": "icons/black-icon-128.png",
+    "48": "icons/black-icon-128.png",
+    "128": "icons/black-icon-128.png"
+  },
+  "browser_action": {
+    "default_title": "Tabs Tabs Tabs",
+    "default_icon": "icons/black-icon-128.png"
+  },
+  "permissions": [
+    "tabs",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "persistent": true,
+    "scripts": [
+      "src/background.js" 
+    ] 
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": [ "*://*/*" ],
+      "js": [
+        "src/content.js"
+      ],
+      "css": [
+        "src/content.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    "src/web/*"
+  ]
+}
