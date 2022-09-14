@@ -1,7 +1,7 @@
 # tabs-tabs-tabs-browser-extension
 Have all the tabs you want open (wahoooo!)
 
-Any tabs that are idle will be made idle so that you can keep opening even more tabs!!!
+We idle tabs so that you can keep opening even more tabs!!!
 
 ## Safest extension. Minimal Permissions Needed.
 
