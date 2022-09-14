@@ -1,5 +1,5 @@
 // Background script
-const IS_DEBUG = true;
+const IS_DEBUG = false;
 const PING_DELAY_MS = IS_DEBUG ? 10 * 1000 : 1 * 60 * 1000;
 const IDLE_TIME_AFTER_MS = IS_DEBUG ? 60 * 1000 : 20 * 60 * 1000;
 const tabActivityMap = new Map();
