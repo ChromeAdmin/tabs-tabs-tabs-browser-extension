@@ -23,20 +23,5 @@
     "scripts": [
       "src/background.js" 
     ] 
-  },
-  "content_scripts": [
-    {
-      "run_at": "document_start",
-      "matches": [ "*://*/*" ],
-      "js": [
-        "src/content.js"
-      ],
-      "css": [
-        "src/content.css"
-      ]
-    }
-  ],
-  "web_accessible_resources": [
-    "src/web/*"
-  ]
+  }
 }

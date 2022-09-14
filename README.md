@@ -3,6 +3,8 @@ Have all the tabs you want open (wahoooo!)
 
 We idle tabs so that you can keep opening even more tabs!!!
 
+Click the extensions icon to instantly idle a page.
+
 ## Safest extension. Minimal Permissions Needed.
 
 Complete privacy. Contains no analytics. Zero dependencies.

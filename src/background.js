@@ -171,11 +171,6 @@ function applyTabIconColor(tab) {
   if (stat.includes('temp')) { setIcon('green', tab); }
   if (stat.includes('idle')) { setIcon('red', tab); }
 
-  const tabActivity = getActivity(tab);
-  const idleUrl = new URL(chrome.runtime.getURL('src/web/idle.html'));
-  idleUrl.searchParams.append('url', tabActivity.tabUrl);
-  idleUrl.searchParams.append('favIcon', tabActivity.tabFavIconUrl);
-  idleUrl.searchParams.append('title', tabActivity.tabTitle);
   // chrome.browserAction.setPopup({
   //   tabId: tab.id,
   //   popup: idleUrl.href,
@@ -256,10 +251,10 @@ async function getAllTabsMap() {
 }
 
 function makeTabIdle(tabId, tabActivity) {
-  const idleUrl = new URL(chrome.runtime.getURL('src/web/idle.html'));
+  const idleUrl = new URL(`https://chromeadmin.github.io/tabs-tabs-tabs-browser-extension/idle`); //new URL(chrome.runtime.getURL('src/web/idle.html'));
+  idleUrl.searchParams.append('title', tabActivity.tabTitle);
   idleUrl.searchParams.append('url', tabActivity.tabUrl);
   idleUrl.searchParams.append('favIcon', tabActivity.tabFavIconUrl);
-  idleUrl.searchParams.append('title', tabActivity.tabTitle);
   chrome.tabs.update(Number(tabId), { url: idleUrl.href });
 }
 
