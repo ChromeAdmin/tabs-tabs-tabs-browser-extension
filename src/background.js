@@ -182,6 +182,8 @@ function isTabIdleForceDisabled(tab) {
   if (tab.pendingUrl?.startsWith('chrome-extension:')) { return true; }
   if (tab.url?.startsWith('chrome:')) { return true; }
   if (tab.pendingUrl?.startsWith('chrome:')) { return true; }
+  if (tab.url?.includes('chromeadmin.github.io/tabs-tabs-tabs-browser-extension/idle')) { return true; }
+  if (tab.pendingUrl?.includes('chromeadmin.github.io/tabs-tabs-tabs-browser-extension/idle')) { return true; }
 
   return false;
 }
