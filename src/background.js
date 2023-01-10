@@ -266,6 +266,7 @@ function makeTabIdle(tabId, tabActivity) {
   idleUrl.searchParams.append('title', `${tabActivity.tabTitle}`.substring(0, 100));
   idleUrl.searchParams.append('url', tabActivity.tabUrl);
   idleUrl.searchParams.append('favIcon', tabActivity.tabFavIconUrl);
+  idleUrl.searchParams.append('date', `${Date.now()}`);
   chrome.tabs.update(Number(tabId), { url: idleUrl.href });
 }
 

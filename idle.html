@@ -44,6 +44,11 @@
       linkEl.innerText = `${origTitle}\n\n${origUrl}`;
       document.body.append(linkEl);
 
+      const origDate = urlParams.get('date');
+      console.log(`${origDate}`);
+      const d = new Date(Number(origDate));
+      linkEl.innerText = `${linkEl.innerText}\n\n\nMade idle on\n${d.toLocaleString()}`;
+
       const origFavIconUrl = urlParams.get('favIcon');
       console.log(origFavIconUrl);
       const faviconLinkEl = document.createElement('link');
