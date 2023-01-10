@@ -1,4 +1,6 @@
 // Background script
+const IDLE_URL = `tabs.ChromeAdmin.com/idle`;
+const IDLE_URL_HTTPS = `https://${IDLE_URL}`;
 const IS_DEBUG = false;
 const PING_DELAY_MS = IS_DEBUG ? 10 * 1000 : 1 * 60 * 1000;
 const IDLE_TIME_AFTER_MS = IS_DEBUG ? 60 * 1000 : 20 * 60 * 1000;
@@ -85,7 +87,7 @@ function init() {
     }
   });
 
-  chrome.browserAction.onClicked.addListener((tab) => {
+  chrome.action.onClicked.addListener((tab) => {
     // No tabs or host permissions needed!
     log(`bA: ${JSON.stringify(tab, null, 2)}`);
     log(`bA: ${JSON.stringify(getActivity(tab), null, 2)}`);
@@ -182,8 +184,8 @@ function isTabIdleForceDisabled(tab) {
   if (tab.pendingUrl?.startsWith('chrome-extension:')) { return true; }
   if (tab.url?.startsWith('chrome:')) { return true; }
   if (tab.pendingUrl?.startsWith('chrome:')) { return true; }
-  if (tab.url?.includes('chromeadmin.github.io/tabs-tabs-tabs-browser-extension/idle')) { return true; }
-  if (tab.pendingUrl?.includes('chromeadmin.github.io/tabs-tabs-tabs-browser-extension/idle')) { return true; }
+  if (tab.url?.includes(IDLE_URL)) { return true; }
+  if (tab.pendingUrl?.includes(IDLE_URL)) { return true; }
 
   return false;
 }
@@ -197,11 +199,18 @@ function isTabBusy(tab) {
 }
 
 function injectAndCheckActivity(tabId) {
-  chrome.tabs.executeScript(tabId,
-    {
-      file: "src/execute.js",
-      allFrames: true,
+  let results;
+  try {
+    results = chrome.scripting.executeScript({
+      target: {tabId: tabId, allFrames: true},
+      files: ['src/execute.js']
     });
+  } catch(e) {
+    console.log(`injectAndCheckActivity`);
+    console.error(e);
+  } finally {
+    console.log(results);
+  }
 }
 
 async function scanAllTabs() {
@@ -253,18 +262,16 @@ async function getAllTabsMap() {
 }
 
 function makeTabIdle(tabId, tabActivity) {
-  const idleUrl = new URL(`https://chromeadmin.github.io/tabs-tabs-tabs-browser-extension/idle`); //new URL(chrome.runtime.getURL('src/web/idle.html'));
-  idleUrl.searchParams.append('title', tabActivity.tabTitle);
+  const idleUrl = new URL(IDLE_URL_HTTPS); //new URL(chrome.runtime.getURL('src/web/idle.html'));
+  idleUrl.searchParams.append('title', `${tabActivity.tabTitle}`.substring(0, 100));
   idleUrl.searchParams.append('url', tabActivity.tabUrl);
   idleUrl.searchParams.append('favIcon', tabActivity.tabFavIconUrl);
+  idleUrl.searchParams.append('date', `${Date.now()}`);
   chrome.tabs.update(Number(tabId), { url: idleUrl.href });
 }
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 function log(text) {
+  return;
   // if (!text.startsWith('bA')) { return; }
   if (!text.includes('youtube')) { return; }
   console.log(`TTT.b: ${text}`);
