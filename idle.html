@@ -1,5 +1,6 @@
 <html>
 <!-- Hi 👋! This html is super lean and simple and will NEVER contain any analytics. -->
+
 <head>
   <meta charset="UTF-8" />
   <style>
@@ -10,7 +11,9 @@
       justify-content: center;
     }
 
-    a, a:link, a:visited {
+    a,
+    a:link,
+    a:visited {
       font-size: 18px;
       height: fit-content;
       width: 80vw;
@@ -23,7 +26,8 @@
       color: rgba(0, 0, 255, 0.7);
     }
 
-    a:hover, a:active {
+    a:hover,
+    a:active {
       font-weight: bold;
       font-size: 20px;
       color: rgba(0, 0, 255, 1);
@@ -47,7 +51,17 @@
       const origDate = urlParams.get('date');
       console.log(`${origDate}`);
       const d = new Date(Number(origDate));
-      linkEl.innerText = `${linkEl.innerText}\n\n\nMade idle on\n${d.toLocaleString()}`;
+      const dText = new Date().toLocaleDateString('en-us', {
+        weekday: "long",
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+      });
+
+      linkEl.innerText = `${linkEl.innerText}\n\n\nidled on\n${dText}`;
 
       const origFavIconUrl = urlParams.get('favIcon');
       console.log(origFavIconUrl);
