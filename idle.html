@@ -37,6 +37,7 @@
 
     div {
       color: dimgray;
+      text-align: center;
     }
   </style>
   <script>
@@ -67,7 +68,7 @@
         hour12: true,
       });
       const dateEl = document.createElement('div');
-      dateEl.innerText = `idled on\n${dText}`;
+      dateEl.innerText = `\n${dText}`;
       document.body.append(dateEl);
 
       const origFavIconUrl = urlParams.get('favIcon');
