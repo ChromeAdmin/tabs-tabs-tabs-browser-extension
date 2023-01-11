@@ -1,6 +1,6 @@
 // Background script
-const IDLE_URL = `tabs.ChromeAdmin.com/idle`;
-const IDLE_URL_HTTPS = `https://${IDLE_URL}`;
+const IDLE_URL = `tabs.ChromeAdmin.com/idle`.toLowerCase();
+const IDLE_URL_HTTPS = `https://${IDLE_URL}`.toLowerCase();
 const IS_DEBUG = false;
 const PING_DELAY_MS = IS_DEBUG ? 10 * 1000 : 1 * 60 * 1000;
 const IDLE_TIME_AFTER_MS = IS_DEBUG ? 60 * 1000 : 20 * 60 * 1000;
@@ -89,6 +89,8 @@ function init() {
 
   chrome.action.onClicked.addListener((tab) => {
     // No tabs or host permissions needed!
+    reportActivity(tab, `fake_ActionClicked`);
+    let tA = getActivity(tab);
     log(`bA: ${JSON.stringify(tab, null, 2)}`);
     log(`bA: ${JSON.stringify(getActivity(tab), null, 2)}`);
     log(`bA: ${JSON.stringify(calcStat(tab), null, 2)}`);
@@ -100,9 +102,9 @@ function init() {
 }
 
 function setIcon(color, tab) {
-  chrome.browserAction?.setIcon({
+  chrome.action?.setIcon({
     tabId: tab.id,
-    path: `icons/${color}-icon-128.png`,
+    path: `/icons/${color}-icon-128.png`,
   });
 }
 
@@ -198,15 +200,15 @@ function isTabBusy(tab) {
   return '';
 }
 
-function injectAndCheckActivity(tabId) {
+async function injectAndCheckActivity(tabId) {
   let results;
   try {
-    results = chrome.scripting.executeScript({
+    console.log(`injectAndCheckActivity`);
+    results = await chrome.scripting.executeScript({
       target: {tabId: tabId, allFrames: true},
       files: ['src/execute.js']
     });
   } catch(e) {
-    console.log(`injectAndCheckActivity`);
     console.error(e);
   } finally {
     console.log(results);
@@ -273,7 +275,8 @@ function makeTabIdle(tabId, tabActivity) {
 function log(text) {
   return;
   // if (!text.startsWith('bA')) { return; }
-  if (!text.includes('youtube')) { return; }
+  // if (!text.includes('youtube')) { return; }
+  if (!text.includes(`chrome.google.com`)) { return; }
   console.log(`TTT.b: ${text}`);
 }
 

@@ -9,6 +9,8 @@
       padding: 0;
       display: flex;
       justify-content: center;
+      flex-direction: column;
+      align-items: center;
     }
 
     a,
@@ -31,6 +33,10 @@
       font-weight: bold;
       font-size: 20px;
       color: rgba(0, 0, 255, 1);
+    }
+
+    div {
+      color: dimgray;
     }
   </style>
   <script>
@@ -60,8 +66,9 @@
         minute: 'numeric',
         hour12: true,
       });
-
-      linkEl.innerText = `${linkEl.innerText}\n\n\nidled on\n${dText}`;
+      const dateEl = document.createElement('div');
+      dateEl.innerText = `idled on\n${dText}`;
+      document.body.append(dateEl);
 
       const origFavIconUrl = urlParams.get('favIcon');
       console.log(origFavIconUrl);
