@@ -1,6 +1,7 @@
 // Background script
 const IDLE_URL = `tabs.ChromeAdmin.com/idle`.toLowerCase();
-const IDLE_URL_HTTPS = `https://${IDLE_URL}`.toLowerCase();
+const IDLE_URL_2 = `chromeadmin.github.io/tabs-tabs-tabs-browser-extension/idle`.toLowerCase();
+const IDLE_URL_HTTPS = `https://${IDLE_URL_2}`.toLowerCase();
 const IS_DEBUG = false;
 const PING_DELAY_MS = IS_DEBUG ? 10 * 1000 : 1 * 60 * 1000;
 const IDLE_TIME_AFTER_MS = IS_DEBUG ? 60 * 1000 : 20 * 60 * 1000;
@@ -187,7 +188,9 @@ function isTabIdleForceDisabled(tab) {
   if (tab.url?.startsWith('chrome:')) { return true; }
   if (tab.pendingUrl?.startsWith('chrome:')) { return true; }
   if (tab.url?.includes(IDLE_URL)) { return true; }
+  if (tab.url?.includes(IDLE_URL_2)) { return true; }
   if (tab.pendingUrl?.includes(IDLE_URL)) { return true; }
+  if (tab.pendingUrl?.includes(IDLE_URL_2)) { return true; }
 
   return false;
 }
