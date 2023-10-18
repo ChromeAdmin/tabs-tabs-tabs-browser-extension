@@ -267,6 +267,15 @@ async function getAllTabsMap() {
 }
 
 function makeTabIdle(tabId, tabActivity) {
+  if (tab.url?.includes(IDLE_URL) || tab.url?.includes(IDLE_URL_2)) { // Recovery from a bad idle
+    const tabUrl = new URL(tab.url);
+    const pUrl = tabUrl.searchParams.get('url');
+    if (pUrl) {
+      chrome.tabs.update(Number(tabId), { url: pUrl });
+    }
+    return;
+  }
+  
   const idleUrl = new URL(IDLE_URL_HTTPS); //new URL(chrome.runtime.getURL('src/web/idle.html'));
   idleUrl.searchParams.append('title', `${tabActivity.tabTitle}`.substring(0, 100));
   idleUrl.searchParams.append('url', tabActivity.tabUrl);
