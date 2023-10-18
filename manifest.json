@@ -1,7 +1,7 @@
 {
   "name": "Tabs Tabs Tabs",
   "description": "Puts tabs in idle so you can have all the tabs open",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "manifest_version": 3,
   "homepage_url": "https://github.com/ChromeAdmin/tabs-tabs-tabs-browser-extension",
   "icons": {
