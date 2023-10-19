@@ -267,8 +267,8 @@ async function getAllTabsMap() {
 }
 
 function makeTabIdle(tabId, tabActivity) {
-  if (tab.url?.includes(IDLE_URL) || tab.url?.includes(IDLE_URL_2)) { // Recovery from a bad idle
-    const tabUrl = new URL(tab.url);
+  if (tabActivity.tabUrl.includes(IDLE_URL) || tabActivity.tabUrl.includes(IDLE_URL_2)) { // Recovery from a bad idle
+    const tabUrl = new URL(tabActivity.tabUrl);
     const pUrl = tabUrl.searchParams.get('url');
     if (pUrl) {
       chrome.tabs.update(Number(tabId), { url: pUrl });
